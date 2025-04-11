@@ -33,6 +33,15 @@ db.Notification = require('../models/notification.model.js')(sequelize, Sequeliz
 
 
 
+if (db.User.associate) db.User.associate(db);
+if (db.PostureAnalysis.associate) db.PostureAnalysis.associate(db);
+if (db.PostureCorrection.associate) db.PostureCorrection.associate(db);
+if (db.UserExerciseLog.associate) db.UserExerciseLog.associate(db);
+if (db.DeviceData.associate) db.DeviceData.associate(db);
+if (db.Notification.associate) db.Notification.associate(db);
+
+
+
 // Función para inicializar la base de datos con datos predefinidos
 db.initialize = async () => {
   try {
