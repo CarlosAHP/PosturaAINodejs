@@ -5,7 +5,7 @@ const db = require('./app/config/db.config.js');
 const cors = require('cors');
 require('dotenv').config(); // Cargar variables de entorno desde .env
 
-// Accede a las variables de entorno con process.env
+// Variables de entorno
 const dbHost = process.env.DB_HOST;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
@@ -13,12 +13,22 @@ const dbName = process.env.DB_NAME;
 const dbPort = process.env.DB_PORT;
 const port = process.env.PORT || 4000;
 
-
 // Configuración de CORS
+const allowedOrigins = ['http://localhost:8080', 'http://localhost:4200'];
+
 const corsOptions = {
-  const allowedOrigins = ['http://localhost:8080', 'http://localhost:4200', 'https://tu-dominio.com'];
-  optionsSuccessStatus: 200
+  origin: function(origin, callback) {
+    // Permitir requests sin origin (como Postman o curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `El CORS no está permitido para el origen: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  optionsSuccessStatus: 200 // Para compatibilidad con navegadores antiguos
 };
+
 app.use(cors(corsOptions));
 
 // Configuración de Body-Parser para manejo de JSON
@@ -51,3 +61,4 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
