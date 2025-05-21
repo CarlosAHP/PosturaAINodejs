@@ -15,7 +15,7 @@ router.get('/users', userController.findAll); // Obtener todos los usuarios
 router.get('/users/:id', userController.findOne); // Obtener un usuario por ID
 router.put('/users/:id', userController.update); // Actualizar un usuario
 router.delete('/users/:id', userController.delete); // Eliminar un usuario
-
+router.post('/login', userController.login);
 // Rutas para operaciones CRUD
 router.post('/posture-exercises', postureExerciseController.create); // Crear un nuevo ejercicio
 router.get('/posture-exercises', postureExerciseController.findAll); // Obtener todos los ejercicios
