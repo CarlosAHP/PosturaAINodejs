@@ -16,7 +16,7 @@ const port = process.env.PORT || 4000;
 
 // Configuración de CORS
 const corsOptions = {
-  origin: 'http://localhost:4200', // O usa la URL de tu frontend en Render si tienes una
+  const allowedOrigins = ['http://localhost:8080', 'http://localhost:4200', 'https://tu-dominio.com'];
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
