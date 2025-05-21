@@ -2,6 +2,35 @@
 const db = require('../config/db.config.js');
 const User = db.User;
 
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = process.env.JWT_SECRET || 'tu_clave_secreta_aqui';
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+    }
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Email o contraseña incorrectos' });
+    }
+
+    const payload = {
+      id: user.id,
+      email: user.email
+    };
+
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+
+    res.json({ token });
+  } catch (error) {
+    console.error('Error en login:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
 // Crear un nuevo usuario
 exports.create = async (req, res) => {
   try {
