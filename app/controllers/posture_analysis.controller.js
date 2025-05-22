@@ -1,4 +1,3 @@
-// controllers/posture_analysis.controller.js
 const db = require('../config/db.config.js');
 const PostureAnalysis = db.PostureAnalysis;
 const User = db.User;
@@ -8,7 +7,8 @@ exports.create = async (req, res) => {
   try {
     const analysis = await PostureAnalysis.create({
       user_id: req.body.user_id,
-      posture_score: req.body.posture_score,
+      current_posture: req.body.current_posture,
+      body_part: req.body.body_part,
       status: req.body.status
     });
     res.status(201).json(analysis);
@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   try {
     const analyses = await PostureAnalysis.findAll({
-      include: [{ model: User, as: 'user' }] // Incluir los datos del usuario asociado
+      include: [{ model: User, as: 'user' }]
     });
     res.status(200).json(analyses);
   } catch (error) {
@@ -33,7 +33,7 @@ exports.findAll = async (req, res) => {
 exports.findOne = async (req, res) => {
   try {
     const analysis = await PostureAnalysis.findByPk(req.params.id, {
-      include: [{ model: User, as: 'user' }] // Incluir los datos del usuario asociado
+      include: [{ model: User, as: 'user' }]
     });
     if (analysis) {
       res.status(200).json(analysis);
