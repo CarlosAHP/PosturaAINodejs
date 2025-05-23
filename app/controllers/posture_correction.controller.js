@@ -1,16 +1,15 @@
-// controllers/posture_correction.controller.js
 const db = require('../config/db.config.js');
 const PostureCorrection = db.PostureCorrection;
 const User = db.User;
-const PostureAnalysis = db.PostureAnalysis;
 
 // Crear una nueva corrección postural
 exports.create = async (req, res) => {
   try {
     const correction = await PostureCorrection.create({
       user_id: req.body.user_id,
-      posture_analysis_id: req.body.posture_analysis_id,
-      suggested_correction: req.body.suggested_correction,
+      name: req.body.name,
+      description: req.body.description,
+      posture: req.body.posture,
       duration_minutes: req.body.duration_minutes
     });
     res.status(201).json(correction);
@@ -24,8 +23,7 @@ exports.findAll = async (req, res) => {
   try {
     const corrections = await PostureCorrection.findAll({
       include: [
-        { model: User, as: 'user' }, 
-        { model: PostureAnalysis, as: 'posture_analysis' }
+        { model: User, as: 'user' }
       ]
     });
     res.status(200).json(corrections);
@@ -39,8 +37,7 @@ exports.findOne = async (req, res) => {
   try {
     const correction = await PostureCorrection.findByPk(req.params.id, {
       include: [
-        { model: User, as: 'user' },
-        { model: PostureAnalysis, as: 'posture_analysis' }
+        { model: User, as: 'user' }
       ]
     });
     if (correction) {
