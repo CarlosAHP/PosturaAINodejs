@@ -1,4 +1,3 @@
-// controllers/posture_exercise.controller.js
 const db = require('../config/db.config.js');
 const PostureExercise = db.PostureExercise;
 
@@ -8,8 +7,8 @@ exports.create = async (req, res) => {
     const exercise = await PostureExercise.create({
       name: req.body.name,
       description: req.body.description,
-      duration_minutes: req.body.duration_minutes,
-      difficulty_level: req.body.difficulty_level
+      posture: req.body.posture,
+      duration_minutes: req.body.duration_minutes
     });
     res.status(201).json(exercise);
   } catch (error) {
