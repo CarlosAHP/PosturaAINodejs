@@ -59,7 +59,7 @@ module.exports = (sequelize, Sequelize) => {
     url_imagen: {
       type: Sequelize.TEXT,
       allowNull: false,
-      defaultValue: ''
+      defaultValue: 'N/A'
     }
     // Quitar created_at y updated_at de la definición manual
   },
