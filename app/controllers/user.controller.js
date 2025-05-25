@@ -93,15 +93,16 @@ exports.findOne = async (req, res) => {
 // --- UPDATE ---
 // controllers/user.controller.js
 
+// controllers/user.controller.js
 exports.update = async (req, res) => {
   try {
-    // 1) Buscamos el usuario
+    // 1) Carga el usuario existente
     const user = await User.findByPk(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    // 2) Lista blanca de campos que permitiremos actualizar
+    // 2) Lista blanca de campos que permitimos actualizar
     const campos = [
       'email',
       'password',
@@ -117,23 +118,24 @@ exports.update = async (req, res) => {
       'url_imagen'
     ];
 
-    // 3) Asignamos sólo los que vengan definidos en req.body
-    campos.forEach(campo => {
-      if (req.body[campo] !== undefined) {
-        user[campo] = req.body[campo];
+    // 3) Asigna sólo los que vengan definidos
+    campos.forEach(c => {
+      if (req.body[c] !== undefined) {
+        user[c] = req.body[c];
       }
     });
 
-    // 4) Guardamos la instancia en la BD
+    // 4) Guarda los cambios en la base de datos
     await user.save();
 
-    // 5) Devolvemos el objeto completo actualizado
+    // 5) Devuelve el objeto actualizado
     return res.status(200).json(user);
   } catch (error) {
     console.error('Error al actualizar el usuario:', error);
     return res.status(500).json({ message: 'Error en el servidor', error });
   }
 };
+
 
 
 // --- DELETE ---
