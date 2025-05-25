@@ -91,53 +91,50 @@ exports.findOne = async (req, res) => {
 };
 
 // --- UPDATE ---
+// controllers/user.controller.js
+
 exports.update = async (req, res) => {
   try {
-    // Mapea explícitamente los campos que aceptas actualizar
-    const {
-      email,
-      password,
-      first_name,
-      last_name,
-      date_of_birth,
-      phone_number,
-      blood_type,
-      allergies,
-      medical_conditions,
-      medications,
-      surgeries,
-      url_imagen
-    } = req.body;
-
-    const [updated] = await User.update(
-      {
-        email,
-        password,
-        first_name,
-        last_name,
-        date_of_birth,
-        phone_number,
-        blood_type,
-        allergies,
-        medical_conditions,
-        medications,
-        surgeries,
-        url_imagen
-      },
-      { where: { id: req.params.id } }
-    );
-
-    if (updated) {
-      const updatedUser = await User.findByPk(req.params.id);
-      res.status(200).json(updatedUser);
-    } else {
-      res.status(404).json({ message: 'Usuario no encontrado' });
+    // 1) Buscamos el usuario
+    const user = await User.findByPk(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
     }
+
+    // 2) Lista blanca de campos que permitiremos actualizar
+    const campos = [
+      'email',
+      'password',
+      'first_name',
+      'last_name',
+      'date_of_birth',
+      'phone_number',
+      'blood_type',
+      'allergies',
+      'medical_conditions',
+      'medications',
+      'surgeries',
+      'url_imagen'
+    ];
+
+    // 3) Asignamos sólo los que vengan definidos en req.body
+    campos.forEach(campo => {
+      if (req.body[campo] !== undefined) {
+        user[campo] = req.body[campo];
+      }
+    });
+
+    // 4) Guardamos la instancia en la BD
+    await user.save();
+
+    // 5) Devolvemos el objeto completo actualizado
+    return res.status(200).json(user);
   } catch (error) {
     console.error('Error al actualizar el usuario:', error);
-    res.status(500).json({ message: 'Error al actualizar el usuario', error });
+    return res.status(500).json({ message: 'Error en el servidor', error });
   }
 };
+
 
 // --- DELETE ---
 exports.delete = async (req, res) => {
