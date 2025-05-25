@@ -11,7 +11,7 @@ const notificationController = require('../controllers/notification.controller.j
 const postureCauseController = require('../controllers/posture_cause.controller.js');
 
 router.post('/posture-causes', postureCauseController.create);
-
+router.get('/posture-causes', postureCauseController.findAll);
 // Rutas para operaciones CRUD
 router.post('/users', userController.create); // Crear un nuevo usuario
 router.get('/users', userController.findAll); // Obtener todos los usuarios
