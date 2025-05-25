@@ -8,6 +8,9 @@ const postureCorrectionController = require('../controllers/posture_correction.c
 const userExerciseLogController = require('../controllers/user_exercise_log.controller.js');
 const deviceDataController = require('../controllers/device_data.controller.js');
 const notificationController = require('../controllers/notification.controller.js');
+const postureCauseController = require('../controllers/posture_cause.controller.js');
+
+router.post('/posture-causes', postureCauseController.create);
 
 // Rutas para operaciones CRUD
 router.post('/users', userController.create); // Crear un nuevo usuario
