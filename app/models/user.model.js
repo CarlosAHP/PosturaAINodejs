@@ -60,23 +60,14 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.TEXT,
       allowNull: false,
       defaultValue: ''
-    },
-    created_at: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
-    },
-    updated_at: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      defaultValue: Sequelize.NOW
     }
+    // Quitar created_at y updated_at de la definición manual
   },
   {
-    // Si prefieres que Sequelize maneje automáticamente createdAt/updatedAt
-    // y convierta camelCase a snake_case, podrías usar:
-    // timestamps: true,
-    // underscored: true
+    timestamps: true,           // Sequelize manejará createdAt y updatedAt
+    createdAt: 'created_at',    // Nombre exacto en la base de datos
+    updatedAt: 'updated_at',
+    underscored: true           // Convierte camelCase a snake_case
   });
 
   return User;
