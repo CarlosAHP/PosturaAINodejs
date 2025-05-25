@@ -78,64 +78,46 @@ exports.findAll = async (req, res) => {
 // --- FIND ONE ---
 exports.findOne = async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+      attributes: { exclude: [] }  // Trae todos los campos sin exclusión
+    });
     if (user) {
       res.status(200).json(user);
     } else {
       res.status(404).json({ message: 'Usuario no encontrado' });
     }
   } catch (error) {
-    console.error('Error al obtener el usuario:', error);
     res.status(500).json({ message: 'Error al obtener el usuario', error });
   }
 };
 
 // --- UPDATE ---
-// controllers/user.controller.js
-
-// controllers/user.controller.js
 exports.update = async (req, res) => {
   try {
-    // 1) Carga el usuario existente
     const user = await User.findByPk(req.params.id);
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
+    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
-    // 2) Lista blanca de campos que permitimos actualizar
     const campos = [
-      'email',
-      'password',
-      'first_name',
-      'last_name',
-      'date_of_birth',
-      'phone_number',
-      'blood_type',
-      'allergies',
-      'medical_conditions',
-      'medications',
-      'surgeries',
-      'url_imagen'
+      'email','password','first_name','last_name','date_of_birth',
+      'phone_number','blood_type','allergies','medical_conditions',
+      'medications','surgeries','url_imagen'
     ];
 
-    // 3) Asigna sólo los que vengan definidos
-    campos.forEach(c => {
-      if (req.body[c] !== undefined) {
-        user[c] = req.body[c];
-      }
+    campos.forEach(campo => {
+      if (req.body[campo] !== undefined) user[campo] = req.body[campo];
     });
 
-    // 4) Guarda los cambios en la base de datos
     await user.save();
 
-    // 5) Devuelve el objeto actualizado
-    return res.status(200).json(user);
+    // Devuelve el objeto completo actualizado
+    const updatedUser = await User.findByPk(req.params.id, {
+      attributes: { exclude: [] }
+    });
+    res.status(200).json(updatedUser);
   } catch (error) {
-    console.error('Error al actualizar el usuario:', error);
-    return res.status(500).json({ message: 'Error en el servidor', error });
+    res.status(500).json({ message: 'Error al actualizar el usuario', error });
   }
 };
-
 
 
 // --- DELETE ---
