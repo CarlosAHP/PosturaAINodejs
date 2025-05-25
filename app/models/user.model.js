@@ -1,44 +1,83 @@
 // models/user.model.js
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define('user', {
-      id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
-      email: {
-        type: Sequelize.STRING(255),
-        unique: true,
-        allowNull: false
-      },
-      password: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      first_name: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      last_name: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      date_of_birth: {
-        type: Sequelize.DATE
-      },
-      phone_number: {
-        type: Sequelize.STRING(15)
-      },
-      created_at: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW
-      }
-    });
-  
-    return User;
-  };
-  
+  const User = sequelize.define('user', {
+    id: {
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    email: {
+      type: Sequelize.STRING(255),
+      unique: true,
+      allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING(255),
+      allowNull: false
+    },
+    first_name: {
+      type: Sequelize.STRING(100),
+      allowNull: false
+    },
+    last_name: {
+      type: Sequelize.STRING(100),
+      allowNull: false
+    },
+    date_of_birth: {
+      type: Sequelize.DATE,
+      allowNull: true
+    },
+    phone_number: {
+      type: Sequelize.STRING(15),
+      allowNull: true
+    },
+    blood_type: {
+      type: Sequelize.STRING(10),
+      allowNull: false,
+      defaultValue: 'N/A'
+    },
+    allergies: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: 'N/A'
+    },
+    medical_conditions: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: 'N/A'
+    },
+    medications: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: 'N/A'
+    },
+    surgeries: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: 'N/A'
+    },
+    url_imagen: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: ''
+    },
+    created_at: {
+      type: Sequelize.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.NOW
+    },
+    updated_at: {
+      type: Sequelize.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.NOW
+    }
+  },
+  {
+    // Si prefieres que Sequelize maneje automáticamente createdAt/updatedAt
+    // y convierta camelCase a snake_case, podrías usar:
+    // timestamps: true,
+    // underscored: true
+  });
+
+  return User;
+};
