@@ -209,25 +209,49 @@ const insertSamplePostureExercises = async () => {
 
 
     await db.User.bulkCreate([
-      {
-        email: 'usuario1@example.com',
-        password: 'password123',
-        first_name: 'Juan',
-        last_name: 'Pérez',
-        date_of_birth: '1990-05-15',
-        phone_number: '555-1234'
-      },
-      {
-        email: 'usuario2@example.com',
-        password: 'password456',
-        first_name: 'Ana',
-        last_name: 'Gómez',
-        date_of_birth: '1985-03-10',
-        phone_number: '555-5678'
-      }
-      // Puedes agregar más usuarios de prueba aquí
-    ]);
-
+  {
+    email: 'usuario1@example.com',
+    password: 'password123',
+    first_name: 'Juan',
+    last_name: 'Pérez',
+    date_of_birth: '1990-05-15',
+    phone_number: '555-1234',
+    blood_type: 'O+',
+    allergies: 'Ninguna',
+    medical_conditions: 'Ninguna',
+    medications: 'Ninguna',
+    surgeries: 'Ninguna',
+    url_imagen: 'https://example.com/images/juan.jpg'
+  },
+  {
+    email: 'usuario2@example.com',
+    password: 'password456',
+    first_name: 'Ana',
+    last_name: 'Gómez',
+    date_of_birth: '1985-03-10',
+    phone_number: '555-5678',
+    blood_type: 'A-',
+    allergies: 'Polen',
+    medical_conditions: 'Asma',
+    medications: 'Inhalador',
+    surgeries: 'Apendicitis',
+    url_imagen: 'https://example.com/images/ana.jpg'
+  },
+  {
+    email: 'usuario3@example.com',
+    password: 'password789',
+    first_name: 'Carlos',
+    last_name: 'Martínez',
+    date_of_birth: '1978-11-25',
+    phone_number: '555-9012',
+    blood_type: 'B+',
+    allergies: 'Penicilina',
+    medical_conditions: 'Hipertensión',
+    medications: 'Beta bloqueadores',
+    surgeries: 'Cirugía de rodilla',
+    url_imagen: 'https://example.com/images/carlos.jpg'
+  }
+]);
 
   
 
