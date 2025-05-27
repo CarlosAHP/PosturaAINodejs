@@ -10,15 +10,18 @@ const deviceDataController = require('../controllers/device_data.controller.js')
 const notificationController = require('../controllers/notification.controller.js');
 const postureCauseController = require('../controllers/posture_cause.controller.js');
 
+
 router.post('/posture-causes', postureCauseController.create);
 router.get('/posture-causes', postureCauseController.findAll);
+
+
 // Rutas para operaciones CRUD
-router.post('/users', userController.create); // Crear un nuevo usuario
-router.get('/users', userController.findAll); // Obtener todos los usuarios
-router.get('/users/:id', userController.findOne); // Obtener un usuario por ID
-router.put('/users/:id', userController.update); // Actualizar un usuario
-router.delete('/users/:id', userController.delete); // Eliminar un usuario
-router.post('/login', userController.login);
+router.post('/users', userController.create);       // Crear un nuevo usuario
+router.get('/users', userController.findAll);        // Obtener todos los usuarios
+router.get('/users/:id', userController.findOne);    // Obtener un usuario por ID
+router.put('/users/:id', userController.update);     // Actualizar un usuario
+router.delete('/users/:id', userController.delete);  // Eliminar un usuario
+router.post('/login', userController.login);         // Login
 // Rutas para operaciones CRUD
 router.post('/posture-exercises', postureExerciseController.create); // Crear un nuevo ejercicio
 router.get('/posture-exercises', postureExerciseController.findAll); // Obtener todos los ejercicios

@@ -15,7 +15,7 @@ exports.login = async (req, res) => {
     }
 
     const payload = { id: user.id, email: user.email };
-    const token   = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
     console.error('Error en login:', error);
@@ -26,7 +26,6 @@ exports.login = async (req, res) => {
 // --- CREATE ---
 exports.create = async (req, res) => {
   try {
-    // Desestructuramos TODO lo que viene en el cuerpo
     const {
       email,
       password,
@@ -98,9 +97,9 @@ exports.update = async (req, res) => {
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
     const campos = [
-      'email','password','first_name','last_name','date_of_birth',
-      'phone_number','blood_type','allergies','medical_conditions',
-      'medications','surgeries','url_imagen'
+      'email', 'password', 'first_name', 'last_name', 'date_of_birth',
+      'phone_number', 'blood_type', 'allergies', 'medical_conditions',
+      'medications', 'surgeries', 'url_imagen'
     ];
 
     campos.forEach(campo => {
@@ -109,7 +108,6 @@ exports.update = async (req, res) => {
 
     await user.save();
 
-    // Devuelve el objeto completo actualizado
     const updatedUser = await User.findByPk(req.params.id, {
       attributes: { exclude: [] }
     });
@@ -118,7 +116,6 @@ exports.update = async (req, res) => {
     res.status(500).json({ message: 'Error al actualizar el usuario', error });
   }
 };
-
 
 // --- DELETE ---
 exports.delete = async (req, res) => {
@@ -132,10 +129,5 @@ exports.delete = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar el usuario:', error);
     res.status(500).json({ message: 'Error al eliminar el usuario', error });
-  }
-};
-
-  } catch (error) {
-    res.status(500).json({ message: "Error al eliminar el usuario", error });
   }
 };

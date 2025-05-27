@@ -1,36 +1,43 @@
-// controllers/posture_cause.controller.js
-const db = require('../models');
+const db = require('../config/db.config.js');
 const PostureCause = db.PostureCause;
+const PostureCorrection = db.PostureCorrection;
 
-// GET /posture-causes?posture=<texto>
-exports.findAll = async (req, res) => {
+// Crear una nueva causa postural
+exports.create = async (req, res) => {
   try {
-    const where = {};
-    if (req.query.posture) {
-      where.posture_correction_id = (
-        await db.PostureCorrection.findOne({
-          where: { posture: req.query.posture },
-          attributes: ['id']
-        })
-      )?.id;
-    }
-    const causes = await PostureCause.findAll({ where, attributes: ['possible_cause'] });
-    res.json(causes);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    const cause = await PostureCause.create(req.body);
+    res.status(201).json(cause);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
-// controllers/posture_cause.controller.js
-const { PostureCause } = db;
+// GET /posture-causes?posture=<texto>&posture_correction_id=<id>
 exports.findAll = async (req, res) => {
-  const where = {};
-  if (req.query.posture) where['$correction.posture$'] = req.query.posture;
-  if (req.query.posture_correction_id) where.posture_correction_id = req.query.posture_correction_id;
+  try {
+    const where = {};
 
-  const causes = await PostureCause.findAll({
-    where,
-    include: [{ model: db.PostureCorrection, as: 'correction', attributes: ['posture'] }]
-  });
-  res.json(causes);
+    // Filtro por postura de la corrección asociada (alias 'correction')
+    if (req.query.posture) {
+      where['$correction.posture$'] = req.query.posture;
+    }
+
+    // Filtro directo por id de corrección
+    if (req.query.posture_correction_id) {
+      where.posture_correction_id = req.query.posture_correction_id;
+    }
+
+    const causes = await PostureCause.findAll({
+      where,
+      include: [{
+        model: PostureCorrection,
+        as: 'correction',
+        attributes: ['posture']
+      }]
+    });
+
+    res.status(200).json(causes);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };

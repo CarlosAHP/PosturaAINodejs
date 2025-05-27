@@ -30,6 +30,7 @@ db.PostureCorrection = require('../models/posture_correction.model.js')(sequeliz
 db.UserExerciseLog = require('../models/user_exercise_log.model.js')(sequelize, Sequelize);
 db.DeviceData = require('../models/device_data.model.js')(sequelize, Sequelize);
 db.Notification = require('../models/notification.model.js')(sequelize, Sequelize);
+db.PostureCause = require('../models/posture_cause.js')(sequelize, Sequelize);
 
 
 
@@ -39,6 +40,7 @@ if (db.PostureCorrection.associate) db.PostureCorrection.associate(db);
 if (db.UserExerciseLog.associate) db.UserExerciseLog.associate(db);
 if (db.DeviceData.associate) db.DeviceData.associate(db);
 if (db.Notification.associate) db.Notification.associate(db);
+if (db.PostureCause.associate) db.PostureCause.associate(db);
 
 
 
